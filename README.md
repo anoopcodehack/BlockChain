@@ -1,149 +1,157 @@
-BlockCert
+# 🔗 BlockCert
+### Blockchain-Based Academic Credential Verification System
 
-Blockchain-Based Academic Credential Verification System
+> A decentralized application (DApp) that eliminates certificate fraud using
+> cryptographic hashing and immutable smart contracts on Ethereum.
 
-Overview
+---
 
-BlockCert is a decentralized application (DApp) that enables secure issuance and verification of academic certificates using blockchain technology.
+## 🧩 The Problem
 
-Instead of relying on manual verification or centralized databases, certificate authenticity is validated through cryptographic hashing and immutable smart contracts deployed on Ethereum.
+Academic credential fraud is rising globally. Traditional verification methods:
 
-This eliminates certificate forgery, reduces verification time, and ensures tamper-proof record storage.
+- 🐢 Take **days or weeks** to process
+- 🏛️ Rely on **centralized databases** prone to tampering
+- 👀 Require **manual human checks**
+- 🔓 Are **vulnerable to forgery**
 
-Problem
+---
 
-Academic credential fraud is increasing globally. Traditional verification methods:
+## ✅ The Solution
 
-Require manual checks
+BlockCert stores **cryptographic proofs** of certificates on-chain —
+not the files themselves — making forgery mathematically impossible.
+Institution uploads certificate
+↓
+SHA-256 hash generated (frontend)
+↓
+Hash stored via smart contract
+↓
+Immutable record on Ethereum
 
-Take days or weeks
+Anyone can verify a certificate by re-hashing the file and matching it
+against the on-chain record — instantly, trustlessly, globally.
 
-Depend on centralized databases
+---
 
-Are vulnerable to tampering
+## 🛠️ Tech Stack
 
-BlockCert solves this by storing cryptographic proofs of certificates on-chain.
+| Layer | Technology |
+|-------------|-------------------------------|
+| Smart Contract | Solidity v0.8.21 |
+| Dev Environment | Hardhat |
+| Blockchain Interaction | Ethers.js |
+| Wallet | MetaMask |
+| Frontend | Next.js |
+| Hashing | CryptoJS (SHA-256) |
 
-Solution
+---
 
-The institution uploads a certificate file.
+## 📜 Smart Contract
 
-The system generates a SHA-256 hash of the file.
+Written in **Solidity v0.8.21**. Deployed on a local Hardhat network.
 
-The hash is stored on the blockchain via a smart contract.
+### Core Functions
 
-Anyone can verify a certificate by re-hashing the file and matching it against the on-chain record.
+```solidity
+issueCertificate(studentId, hash)   // Institution issues a certificate
+verifyCertificate(studentId, hash)  // Anyone verifies authenticity
+revokeCertificate(studentId)        // Institution revokes a certificate
+getCertificate(studentId)           // Fetch certificate record
+```
 
-No actual certificate files are stored on-chain — only cryptographic hashes.
+### Certificate Record Structure
 
-Smart Contract
+| Field | Description |
+|------------|-------------------------------|
+| `hash` | SHA-256 hash of the certificate file |
+| `timestamp` | Time of issuance |
+| `isRevoked` | Revocation status |
 
-Written in Solidity (v0.8.21).
+---
 
-Core Functions
+## ⚙️ How It Works
 
-issueCertificate(studentId, hash)
+### 🎓 Issuance
+1. Institution uploads a certificate file
+2. Frontend generates a **SHA-256 hash** of the file
+3. Hash is submitted to the smart contract
+4. Transaction is recorded permanently on the Ethereum network
 
-verifyCertificate(studentId, hash)
+### 🔍 Verification
+1. Verifier uploads the certificate file
+2. File is hashed again using SHA-256
+3. Hash is compared against the on-chain record
+4. Returns ✅ **Authentic** or ❌ **Invalid / Revoked**
 
-revokeCertificate(studentId)
+---
 
-getCertificate(studentId)
+## 🖥️ Screenshots
 
-Each certificate record contains:
+<!-- Add screenshots below -->
+| Issuance Flow | Verification Flow |
+|---|---|
+| ![Issue](screenshots/issue.png) | ![Verify](screenshots/verify.png) |
 
-Hash
+---
 
-Timestamp
+## 🚀 Setup & Run Locally
 
-Revocation status
+### Prerequisites
+- Node.js installed
+- MetaMask browser extension
+- MetaMask connected to **Hardhat Local** (Chain ID: `31337`)
 
-Tech Stack
+### Steps
 
-Solidity
-
-Hardhat
-
-Ethers.js
-
-MetaMask
-
-Next.js (Frontend)
-
-CryptoJS (SHA-256 hashing)
-
-How It Works
-Certificate Issuance
-
-File → SHA-256 hash generated in frontend
-
-Hash submitted to smart contract
-
-Transaction recorded on Ethereum network
-
-Certificate Verification
-
-File is hashed again
-
-Hash compared with stored blockchain record
-
-Returns true/false based on authenticity and revocation status
-
-Setup & Run Locally
-1. Install dependencies
+```bash
+# 1. Install dependencies
 npm install
 
-2. Start Hardhat local node
+# 2. Start Hardhat local node
 npx hardhat node
 
-3. Deploy contract
+# 3. Deploy the smart contract
 npx hardhat run scripts/deploy.js --network localhost
 
+# 4. Update contract address in the frontend config
 
-Update the deployed contract address in the frontend.
-
-4. Start frontend
+# 5. Start the frontend
 npm run dev
+```
 
+> 🌐 App runs at `http://localhost:3000`
 
-Make sure MetaMask is connected to:
+---
 
-Network: Hardhat Local
+## 🔐 Security Design
 
-Chain ID: 31337
+| Measure | Purpose |
+|---------|---------|
+| SHA-256 Hashing | Ensures certificate integrity |
+| Immutable Smart Contract | Prevents unauthorized tampering |
+| Revocation Mechanism | Invalidates compromised certificates |
+| No file stored on-chain | Protects sensitive data |
 
-Security Design
+---
 
-SHA-256 hashing ensures certificate integrity
+## 🔮 Future Improvements
 
-Smart contract prevents unauthorized tampering
+- [ ] Role-based access control (institutions only for issuance)
+- [ ] Deployment to **Sepolia testnet**
+- [ ] **QR code** based instant verification
+- [ ] Institutional login & authentication
+- [ ] **IPFS integration** for decentralized file storage
 
-Revocation mechanism allows invalidation of compromised certificates
+---
 
-No sensitive files stored on-chain
+## 💡 Why Blockchain?
 
-Future Improvements
+| Property | Benefit |
+|---|---|
+| **Immutability** | Records cannot be altered once stored |
+| **Transparency** | Anyone can audit the chain |
+| **Cryptographic Trust** | Math, not middlemen |
+| **Decentralization** | No single point of failure or authority |
 
-Role-based access control (only institutions can issue certificates)
-
-Deployment to Sepolia testnet
-
-QR-code based verification system
-
-Institutional login authentication
-
-IPFS integration for decentralized file storage
-
-Why Blockchain?
-
-Blockchain ensures:
-
-Immutability
-
-Transparency
-
-Cryptographic trust
-
-Decentralized verification
-
-This removes reliance on centralized verification authorities.
+> BlockCert removes the need for centralized verification authorities entirely.
