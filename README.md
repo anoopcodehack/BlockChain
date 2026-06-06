@@ -88,10 +88,17 @@ getCertificate(studentId)           // Fetch certificate record
 
 ## 🖥️ Screenshots
 
+<img width="1871" height="904" alt="Screenshot 2026-02-15 120006" src="https://github.com/user-attachments/assets/e949a951-8b41-4933-a9e7-c253dc3b80b4" />
+
+
 <!-- Add screenshots below -->
 | Issuance Flow | Verification Flow |
 |---|---|
-| ![Issue](screenshots/issue.png) | ![Verify](screenshots/verify.png) |
+<img width="1919" height="956" alt="Screenshot 2026-02-15 135214" src="https://github.com/user-attachments/assets/01dad4e2-9c64-4922-a73e-3df9fe5b8ea9" />
+
+<img width="1902" height="929" alt="Screenshot 2026-02-15 135742" src="https://github.com/user-attachments/assets/77def3f8-f3d1-4070-8bea-ddcb23940931" />
+
+
 
 ---
 
